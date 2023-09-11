@@ -20,8 +20,13 @@ export interface Env {
 
 export class ChatRoom {
 	state: DurableObjectState;
+	users: WebSocket[];
+	messages: string[];
+
 	constructor(state: DurableObjectState, env: Env) {
 		this.state = state;
+		this.users = [];
+		this.messages = [];
 	}
 
 	async getCounter() {
@@ -52,9 +57,14 @@ export class ChatRoom {
 
 	handleWebSocket(webSocket: WebSocket) {
 		webSocket.accept();
-		setTimeout(() => {
-			webSocket.send(JSON.stringify({ message: 'hello from backend!' }));
-		}, 3000);
+		this.users.push(webSocket);
+		webSocket.send(JSON.stringify({ message: 'hello from backend!' }));
+		this.messages.forEach((message) => webSocket.send(message));
+
+		webSocket.addEventListener('message', (event) => {
+			this.messages.push(event.data.toString());
+			this.users.forEach((user) => user.send(event.data));
+		});
 	}
 
 	handleNotFound() {
