@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Room</title>
+</head>
+
+<body>
+  <h1>Chat Room</h1>
+  <button>Connect</button>
+  <script>
+    const button = document.querySelector("button")
+    button.addEventListener("click", () => {
+      const socket = new WebSocket(`ws://${window.location.host}/connect`)
+
+      socket.addEventListener("open", () => {
+        console.log("connected")
+      })
+
+      socket.addEventListener("message", (event) => {
+        console.log(event.data)
+      })
+    })
+  </script>
+</body>
+
+</html>

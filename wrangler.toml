@@ -41,8 +41,8 @@ compatibility_date = "2023-09-04"
 # Durable Objects can live for as long as needed. Use these when you need a long-running "server", such as in realtime apps.
 # Docs: https://developers.cloudflare.com/workers/runtime-apis/durable-objects
 [[durable_objects.bindings]]
-name = "COUNTER"
-class_name = "CounterObject"
+name = "CHAT"
+class_name = "ChatRoom"
 
 # Durable Object migrations.
 # Docs: https://developers.cloudflare.com/workers/learning/using-durable-objects#configure-durable-object-classes-with-migrations
